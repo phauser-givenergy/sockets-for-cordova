@@ -40,7 +40,7 @@ function Socket() {
     this.socketKey = guid();
 }
 
-Socket.prototype.open = function (host, port, success, error) {
+Socket.prototype.open = function (host, port, timeout, success, error) {
 
     success = success || function () {
         };
@@ -96,7 +96,8 @@ Socket.prototype.open = function (host, port, success, error) {
         [
             this.socketKey,
             host,
-            port
+            port,
+            timeout
         ]);
 };
 
@@ -123,6 +124,28 @@ Socket.prototype.write = function (data, success, error) {
         [
             this.socketKey,
             dataToWrite
+        ]);
+};
+
+Socket.prototype.setOptions = function (optionsJSON, success, error) {
+
+    success = success || function () {
+        };
+    error = error || function () {
+        };
+
+    if (!this._ensureState(Socket.State.OPENED, error)) {
+        return;
+    }
+
+    exec(
+        success,
+        error,
+        CORDOVA_SERVICE_NAME,
+        "setOptions",
+        [
+            this.socketKey,
+            optionsJSON
         ]);
 };
 
