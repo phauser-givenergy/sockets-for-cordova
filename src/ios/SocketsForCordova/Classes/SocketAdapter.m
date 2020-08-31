@@ -44,7 +44,7 @@ int writeTimeoutSeconds = 5.0;
     CFReadStreamRef readStream2;
     CFWriteStreamRef writeStream2;
 
-    NSLog(@"[NATIVE] Setting up connection to %@ : %@", host, [port stringValue]);
+    NSLog(@"[NATIVE] Setting up connection to %@ : %@", host, port);
 
     if (![self isIp:host]) {
         host = [self resolveIp:host];
